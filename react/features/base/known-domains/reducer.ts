@@ -14,9 +14,9 @@ import { ADD_KNOWN_DOMAINS } from './actionTypes';
  * out of the Android manifest.
  */
 export const DEFAULT_STATE = [
-    'alpha.jitsi.net',
-    'beta.meet.jit.si',
-    'meet.jit.si',
+    'vc1.satia.co',
+    'beta.vc1.satia.co',
+    'vc1.satia.co',
     '8x8.vc'
 ];
 

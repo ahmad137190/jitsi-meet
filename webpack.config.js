@@ -8,11 +8,11 @@ const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**
- * The URL of the Jitsi Meet deployment to be proxy to in the context of
+ * The URL of the Satia Meet deployment to be proxy to in the context of
  * development with webpack-dev-server.
  */
 const devServerProxyTarget
-    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://alpha.jitsi.net';
+    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://vc1.satia.co';
 
 /**
  * Build a Performance configuration object for the given size.
@@ -238,7 +238,8 @@ function getDevServerConfig() {
                 warnings: false
             }
         },
-        host: '127.0.0.1',
+       // host: '127.0.0.1',
+        host: 'localhost',
         hot: true,
         proxy: [
             {

@@ -44,10 +44,10 @@ body:
   - type: checkboxes
     attributes:
       label: Reproducibility
-      description: Does the problem reproduce on meet.jit.si using Chrome, Firefox or the official mobile apps?
+      description: Does the problem reproduce on vc1.satia.co using Chrome, Firefox or the official mobile apps?
       options:
-        - label: The problem is reproducible on meet.jit.si
+        - label: The problem is reproducible on vc1.satia.co
   - type: textarea
     attributes:
       label: More details?
-      description: Please provide more details in case they apply (such as the Jitsi Meet version you are running, if you are hosting your own server).
+      description: Please provide more details in case they apply (such as the Satia Meet version you are running, if you are hosting your own server).

@@ -301,7 +301,7 @@ function parseSizeParam(value) {
  */
 export default class JitsiMeetExternalAPI extends EventEmitter {
     /**
-     * Constructs new API instance. Creates iframe and loads Jitsi Meet in it.
+     * Constructs new API instance. Creates iframe and loads Satia Meet in it.
      *
      * @param {string} domain - The domain name of the server that hosts the
      * conference.
@@ -492,7 +492,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
 
 
     /**
-     * Getter for the large video element in Jitsi Meet.
+     * Getter for the large video element in Satia Meet.
      *
      * @returns {HTMLElement|undefined} - The large video.
      */
@@ -510,7 +510,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
     }
 
     /**
-     * Getter for the prejoin video element in Jitsi Meet.
+     * Getter for the prejoin video element in Satia Meet.
      *
      * @returns {HTMLElement|undefined} - The prejoin video.
      */
@@ -528,7 +528,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
     }
 
     /**
-     * Getter for participant specific video element in Jitsi Meet.
+     * Getter for participant specific video element in Satia Meet.
      *
      * @param {string|undefined} participantId - Id of participant to return the video for.
      *
@@ -852,7 +852,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      * id: participantId //participantId of the new dominant speaker
      * }}
      * {@code suspendDetected} - receives event notifications about detecting suspend event in host computer.
-     * {@code readyToClose} - all hangup operations are completed and Jitsi Meet
+     * {@code readyToClose} - all hangup operations are completed and Satia Meet
      * is ready to be disposed.
      * @returns {void}
      *
@@ -878,7 +878,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
     }
 
     /**
-     * Removes the listeners and removes the Jitsi Meet frame.
+     * Removes the listeners and removes the Satia Meet frame.
      *
      * @returns {void}
      */
@@ -1216,7 +1216,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
     }
 
     /**
-     * Returns the iframe that loads Jitsi Meet.
+     * Returns the iframe that loads Satia Meet.
      *
      * @returns {HTMLElement} The iframe.
      */
@@ -1444,7 +1444,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      * @param { string } options.mode - Recording mode, either `file` or `stream`.
      * @param { string } options.dropboxToken - Dropbox oauth2 token.
      * @param { boolean } options.shouldShare - Whether the recording should be shared with the participants or not.
-     * Only applies to certain jitsi meet deploys.
+     * Only applies to certain Satia Meet deploys.
      * @param { string } options.rtmpStreamKey - The RTMP stream key.
      * @param { string } options.rtmpBroadcastID - The RTMP broadcast ID.
      * @param { string } options.youtubeStreamKey - The youtube stream key.
