@@ -1,4 +1,4 @@
 /**
  * The default server URL to open if no other was specified.
  */
-export const DEFAULT_SERVER_URL = 'https://vc1.satia.co';
+export const DEFAULT_SERVER_URL = 'https://vc2.satia.co';

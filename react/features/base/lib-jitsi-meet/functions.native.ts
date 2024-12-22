@@ -18,6 +18,13 @@ const { JavaScriptSandbox } = NativeModules;
  */
 export async function loadConfig(url: string): Promise<Object> {
     try {
+
+        // const response = await fetch(url );
+        // // @ts-ignore
+        // throw new Error('Failed to load config from @@@',response.text.toString());
+
+
+
         const configTxt = await loadScript(url, 10 * 1000 /* Timeout in ms */, true /* skipeval */);
         const configJson = await JavaScriptSandbox.evaluate(`${configTxt}\nJSON.stringify(config);`);
         const config = safeJsonParse(configJson);
@@ -30,7 +37,7 @@ export async function loadConfig(url: string): Promise<Object> {
 
         return config;
     } catch (err) {
-        logger.error(`Failed to load config from ${url}`, err);
+        logger.error(`Failed to load config from ?? ${url}`, err);
 
         throw err;
     }

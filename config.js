@@ -1633,7 +1633,7 @@ var config = {
 
     /**
      * This property can be used to alter the generated meeting invite links (in combination with a branding domain
-     * which is retrieved internally by Satia Meet) (e.g. https://vc1.satia.co/someMeeting
+     * which is retrieved internally by Satia Meet) (e.g. https://vc2.satia.co/someMeeting
      * can become https://brandedDomain/roomAlias)
      */
     // brandingRoomAlias: null,

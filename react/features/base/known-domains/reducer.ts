@@ -14,9 +14,9 @@ import { ADD_KNOWN_DOMAINS } from './actionTypes';
  * out of the Android manifest.
  */
 export const DEFAULT_STATE = [
-    'vc1.satia.co',
-    'beta.vc1.satia.co',
-    'vc1.satia.co',
+    'vc2.satia.co',
+    'beta.vc2.satia.co',
+    'vc2.satia.co',
     '8x8.vc'
 ];
 

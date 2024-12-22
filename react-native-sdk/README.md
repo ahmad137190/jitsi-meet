@@ -100,7 +100,7 @@ https://github.com/jitsi/jitsi-meet-sdk-samples/tree/master/react-native
 ```javascript
   <JitsiMeeting
     room = { 'ThisIsNotATestRoomName' }
-    serverURL = { 'https://vc1.satia.co/' }
+    serverURL = { 'https://vc2.satia.co/' }
     token={ 'dkhalhfajhflahlfaahalhfahfsl' } />
 ```
 
@@ -123,7 +123,7 @@ https://github.com/jitsi/jitsi-meet-sdk-samples/tree/master/react-native
         ]
     }}
     room = { 'ThisIsNotATestRoomName' }
-    serverURL = { 'https://vc1.satia.co/' }
+    serverURL = { 'https://vc2.satia.co/' }
     token = { 'dkhalhfajhflahlfaahalhfahfsl' } />
 ```
 

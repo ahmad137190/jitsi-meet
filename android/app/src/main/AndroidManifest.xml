@@ -30,9 +30,9 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.BROWSABLE" />
         <category android:name="android.intent.category.DEFAULT" />
-        <data android:host="vc1.satia.co" android:scheme="https" />
-        <data android:host="beta.vc1.satia.co" android:scheme="https" />
-        <data android:host="vc1.satia.co" android:scheme="https" />
+        <data android:host="vc2.satia.co" android:scheme="https" />
+        <data android:host="beta.vc2.satia.co" android:scheme="https" />
+        <data android:host="vc2.satia.co" android:scheme="https" />
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />

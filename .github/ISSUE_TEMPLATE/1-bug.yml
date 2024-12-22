@@ -44,9 +44,9 @@ body:
   - type: checkboxes
     attributes:
       label: Reproducibility
-      description: Does the problem reproduce on vc1.satia.co using Chrome, Firefox or the official mobile apps?
+      description: Does the problem reproduce on vc2.satia.co using Chrome, Firefox or the official mobile apps?
       options:
-        - label: The problem is reproducible on vc1.satia.co
+        - label: The problem is reproducible on vc2.satia.co
   - type: textarea
     attributes:
       label: More details?

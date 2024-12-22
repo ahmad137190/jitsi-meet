@@ -31,7 +31,7 @@
 
     jitsiMeet.conferenceActivityType = JitsiMeetConferenceActivityType;
     jitsiMeet.customUrlScheme = @"org.jitsi.meet";
-    jitsiMeet.universalLinkDomains = @[@"vc1.satia.co", @"vc1.satia.co", @"beta.vc1.satia.co"];
+    jitsiMeet.universalLinkDomains = @[@"vc2.satia.co", @"vc2.satia.co", @"beta.vc2.satia.co"];
 
     jitsiMeet.defaultConferenceOptions = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {
         [builder setFeatureFlag:@"welcomepage.enabled" withBoolean:YES];
