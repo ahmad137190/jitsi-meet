@@ -23,7 +23,7 @@ android {
 
 
     defaultConfig {
-        applicationId 'org.jitsi.meet'
+        applicationId 'com.satia.meet'
         versionCode vcode
         versionName project.appVersion
 
@@ -42,6 +42,15 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+              release {
+                 if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                     storeFile file(MYAPP_RELEASE_STORE_FILE)
+                     storePassword MYAPP_RELEASE_STORE_PASSWORD
+                     keyAlias MYAPP_RELEASE_KEY_ALIAS
+                     keyPassword MYAPP_RELEASE_KEY_PASSWORD
+                                        }
+                          }
+
     }
 
     buildTypes {
@@ -56,6 +65,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-release.pro'
             buildConfigField "boolean", "GOOGLE_SERVICES_ENABLED", "${googleServicesEnabled}"
             buildConfigField "boolean", "LIBRE_BUILD", "${rootProject.ext.libreBuild}"
+                        signingConfig signingConfigs.release
+
         }
     }
 

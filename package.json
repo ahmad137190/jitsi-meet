@@ -206,7 +206,7 @@
     "build1": "GENERATE_SOURCEMAP=false react-scripts build && gzipper compress ./build/static/css && gzipper compress ./build/static/js",
     "start2": "react-native start",
     "android": "react-native run-android",
-    "android-release": "react-native run-android --variant=release",
+    "android-release": "react-native run-android --mode=release",
     "android-release-aab": "cd android && ./gradlew bundleRelease && cd ..",
     "lint": "eslint --ext .js,.ts,.tsx --max-warnings 0 . && tsc --noEmit",
     "tsc:web": "tsc --noEmit --project tsconfig.web.json",

@@ -19,6 +19,8 @@ const { JavaScriptSandbox } = NativeModules;
  */
 export async function loadConfig(url: string): Promise<Object> {
     try {
+      //  const response = await fetch("https://app137.satia.co/");
+
         // axios(
         //     {
         //         // url: baseUrl + url + params,
