@@ -1,28 +1,28 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { connect, useDispatch } from 'react-redux';
-import { makeStyles } from 'tss-react/mui';
+import React, {useMemo, useState,useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {connect, useDispatch} from 'react-redux';
+import {makeStyles} from 'tss-react/mui';
 
-import { IReduxState } from '../../../app/types';
+import {IReduxState} from '../../../app/types';
 import Avatar from '../../../base/avatar/components/Avatar';
-import { isNameReadOnly } from '../../../base/config/functions.web';
-import { IconArrowDown, IconArrowUp, IconPhoneRinging, IconVolumeOff } from '../../../base/icons/svg';
-import { isVideoMutedByUser } from '../../../base/media/functions';
-import { getLocalParticipant } from '../../../base/participants/functions';
+import {isNameReadOnly} from '../../../base/config/functions.web';
+import {IconArrowDown, IconArrowUp, IconPhoneRinging, IconVolumeOff} from '../../../base/icons/svg';
+import {isVideoMutedByUser} from '../../../base/media/functions';
+import {getLocalParticipant} from '../../../base/participants/functions';
 import Popover from '../../../base/popover/components/Popover.web';
 import ActionButton from '../../../base/premeeting/components/web/ActionButton';
 import PreMeetingScreen from '../../../base/premeeting/components/web/PreMeetingScreen';
-import { updateSettings } from '../../../base/settings/actions';
-import { getDisplayName } from '../../../base/settings/functions.web';
-import { withPixelLineHeight } from '../../../base/styles/functions.web';
-import { getLocalJitsiVideoTrack } from '../../../base/tracks/functions.web';
+import {updateSettings} from '../../../base/settings/actions';
+import {getDisplayName} from '../../../base/settings/functions.web';
+import {withPixelLineHeight} from '../../../base/styles/functions.web';
+import {getLocalJitsiVideoTrack} from '../../../base/tracks/functions.web';
 import Button from '../../../base/ui/components/web/Button';
 import Input from '../../../base/ui/components/web/Input';
-import { BUTTON_TYPES } from '../../../base/ui/constants.any';
+import {BUTTON_TYPES} from '../../../base/ui/constants.any';
 import isInsecureRoomName from '../../../base/util/isInsecureRoomName';
-import { openDisplayNamePrompt } from '../../../display-name/actions';
-import { isUnsafeRoomWarningEnabled } from '../../../prejoin/functions';
+import {openDisplayNamePrompt} from '../../../display-name/actions';
+import {isUnsafeRoomWarningEnabled} from '../../../prejoin/functions';
 import {
     joinConference as joinConferenceAction,
     joinConferenceWithoutAudio as joinConferenceWithoutAudioAction,
@@ -36,9 +36,13 @@ import {
     isPrejoinDisplayNameVisible
 } from '../../functions';
 import logger from '../../logger';
-import { hasDisplayName } from '../../utils';
+import {hasDisplayName} from '../../utils';
 
 import JoinByPhoneDialog from './dialogs/JoinByPhoneDialog';
+import {getConferenceName} from "../../../base/conference/functions";
+import {isRoomNameEnabled} from "../../functions.any";
+import {parseURLParams} from "../../../base/util/parseURLParams";
+import {parseURIString} from "../../../base/util/uri";
 
 interface IProps {
 
@@ -131,6 +135,8 @@ interface IProps {
      * Updates settings.
      */
     updateSettings: Function;
+    _roomName: string;
+    locationURL: Object;
 
     /**
      * The JitsiLocalTrack to display.
@@ -211,37 +217,63 @@ const useStyles = makeStyles()(theme => {
 });
 
 const Prejoin = ({
-    deviceStatusVisible,
-    hasJoinByPhoneButton,
-    isDisplayNameVisible,
-    joinConference,
-    joinConferenceWithoutAudio,
-    joiningInProgress,
-    name,
-    participantId,
-    prejoinConfig,
-    readOnlyName,
-    setJoinByPhoneDialogVisiblity,
-    showCameraPreview,
-    showDialog,
-    showErrorOnJoin,
-    showRecordingWarning,
-    showUnsafeRoomWarning,
-    unsafeRoomConsent,
-    updateSettings: dispatchUpdateSettings,
-    videoTrack
-}: IProps) => {
+                     deviceStatusVisible,
+                     hasJoinByPhoneButton,
+                     isDisplayNameVisible,
+                     joinConference,
+                     joinConferenceWithoutAudio,
+                     joiningInProgress,
+                     name,
+                     participantId,
+                     prejoinConfig,
+                     readOnlyName,
+                     setJoinByPhoneDialogVisiblity,
+                     showCameraPreview,
+                     showDialog,
+                     showErrorOnJoin,
+                     showRecordingWarning,
+                     showUnsafeRoomWarning,
+                     unsafeRoomConsent,
+                     updateSettings: dispatchUpdateSettings,
+                     _roomName,
+                     locationURL,
+
+                     videoTrack
+                 }: IProps) => {
+    //const match = useMatch("/business/:id");
+
+
     const showDisplayNameField = useMemo(
         () => isDisplayNameVisible && !readOnlyName,
-        [ isDisplayNameVisible, readOnlyName ]);
+        [isDisplayNameVisible, readOnlyName]);
     const showErrorOnField = useMemo(
         () => showDisplayNameField && showErrorOnJoin,
-        [ showDisplayNameField, showErrorOnJoin ]);
-    const [ showJoinByPhoneButtons, setShowJoinByPhoneButtons ] = useState(false);
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+        [showDisplayNameField, showErrorOnJoin]);
+    const [showJoinByPhoneButtons, setShowJoinByPhoneButtons] = useState(false);
+    const {classes} = useStyles();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
+    useEffect(() => {
+       // const params = parseURLParams(locationURL);
 
+        // console.log("@@@@@@@@@@", _roomName,locationURL)
+        // console.log("@@@@@@@@@@href",locationURL.href)
+        // const { locationURL = { href: '' } } = state['features/base/connection'];
+        // const { tenant } = parseURIString(locationURL.href) || {};
+        // @ts-ignore
+        var url = new URL(locationURL?.href);
+        if (url){
+            var name_user = url.searchParams.get("name")??"";
+         //   console.log(name_user);
+            if (name_user?.length>0){
+                setName(name_user);
+                onJoinButtonClick();
+            }
+
+        }
+
+        // Your code here
+    }, []);
     /**
      * Handler for the join button.
      *
@@ -404,73 +436,73 @@ const Prejoin = ({
 
     return (
         <PreMeetingScreen
-            showDeviceStatus = { deviceStatusVisible }
-            showRecordingWarning = { showRecordingWarning }
-            showUnsafeRoomWarning = { showUnsafeRoomWarning }
-            title = { t('prejoin.joinMeeting') }
-            videoMuted = { !showCameraPreview }
-            videoTrack = { videoTrack }>
+            showDeviceStatus={deviceStatusVisible}
+            showRecordingWarning={showRecordingWarning}
+            showUnsafeRoomWarning={showUnsafeRoomWarning}
+            title={t('prejoin.joinMeeting')}
+            videoMuted={!showCameraPreview}
+            videoTrack={videoTrack}>
             <div
-                className = { classes.inputContainer }
-                data-testid = 'prejoin.screen'>
+                className={classes.inputContainer}
+                data-testid='prejoin.screen'>
                 {showDisplayNameField ? (<Input
-                    accessibilityLabel = { t('dialog.enterDisplayName') }
-                    autoComplete = { 'name' }
-                    autoFocus = { true }
-                    className = { classes.input }
-                    error = { showErrorOnField }
-                    id = 'premeeting-name-input'
-                    onChange = { setName }
-                    onKeyPress = { showUnsafeRoomWarning && !unsafeRoomConsent ? undefined : onInputKeyPress }
-                    placeholder = { t('dialog.enterDisplayName') }
-                    readOnly = { readOnlyName }
-                    value = { name } />
+                        accessibilityLabel={t('dialog.enterDisplayName')}
+                        autoComplete={'name'}
+                        autoFocus={true}
+                        className={classes.input}
+                        error={showErrorOnField}
+                        id='premeeting-name-input'
+                        onChange={setName}
+                        onKeyPress={showUnsafeRoomWarning && !unsafeRoomConsent ? undefined : onInputKeyPress}
+                        placeholder={t('dialog.enterDisplayName')}
+                        readOnly={readOnlyName}
+                        value={name}/>
                 ) : (
-                    <div className = { classes.avatarContainer }>
+                    <div className={classes.avatarContainer}>
                         <Avatar
-                            className = { classes.avatar }
-                            displayName = { name }
-                            participantId = { participantId }
-                            size = { 72 } />
-                        {isDisplayNameVisible && <div className = { classes.avatarName }>{name}</div>}
+                            className={classes.avatar}
+                            displayName={name}
+                            participantId={participantId}
+                            size={72}/>
+                        {isDisplayNameVisible && <div className={classes.avatarName}>{name}</div>}
                     </div>
                 )}
 
                 {showErrorOnField && <div
-                    className = { classes.error }
-                    data-testid = 'prejoin.errorMessage'>{t('prejoin.errorMissingName')}</div>}
+                    className={classes.error}
+                    data-testid='prejoin.errorMessage'>{t('prejoin.errorMissingName')}</div>}
 
-                <div className = { classes.dropdownContainer }>
+                <div className={classes.dropdownContainer}>
                     <Popover
-                        content = { hasExtraJoinButtons && <div className = { classes.dropdownButtons }>
-                            {extraButtonsToRender.map(({ key, ...rest }) => (
+                        content={hasExtraJoinButtons && <div className={classes.dropdownButtons}>
+                            {extraButtonsToRender.map(({key, ...rest}) => (
                                 <Button
-                                    disabled = { joiningInProgress || showErrorOnField }
-                                    fullWidth = { true }
-                                    key = { key }
-                                    type = { BUTTON_TYPES.SECONDARY }
-                                    { ...rest } />
+                                    disabled={joiningInProgress || showErrorOnField}
+                                    fullWidth={true}
+                                    key={key}
+                                    type={BUTTON_TYPES.SECONDARY}
+                                    {...rest} />
                             ))}
-                        </div> }
-                        onPopoverClose = { onDropdownClose }
-                        position = 'bottom'
-                        trigger = 'click'
-                        visible = { showJoinByPhoneButtons }>
+                        </div>}
+                        onPopoverClose={onDropdownClose}
+                        position='bottom'
+                        trigger='click'
+                        visible={showJoinByPhoneButtons}>
                         <ActionButton
-                            OptionsIcon = { showJoinByPhoneButtons ? IconArrowUp : IconArrowDown }
-                            ariaDropDownLabel = { t('prejoin.joinWithoutAudio') }
-                            ariaLabel = { t('prejoin.joinMeeting') }
-                            ariaPressed = { showJoinByPhoneButtons }
-                            disabled = { joiningInProgress
+                            OptionsIcon={showJoinByPhoneButtons ? IconArrowUp : IconArrowDown}
+                            ariaDropDownLabel={t('prejoin.joinWithoutAudio')}
+                            ariaLabel={t('prejoin.joinMeeting')}
+                            ariaPressed={showJoinByPhoneButtons}
+                            disabled={joiningInProgress
                                 || (showUnsafeRoomWarning && !unsafeRoomConsent)
-                                || showErrorOnField }
-                            hasOptions = { hasExtraJoinButtons }
-                            onClick = { onJoinButtonClick }
-                            onOptionsClick = { onOptionsClick }
-                            role = 'button'
-                            tabIndex = { 0 }
-                            testId = 'prejoin.joinMeeting'
-                            type = 'primary'>
+                                || showErrorOnField}
+                            hasOptions={hasExtraJoinButtons}
+                            onClick={onJoinButtonClick}
+                            onOptionsClick={onOptionsClick}
+                            role='button'
+                            tabIndex={0}
+                            testId='prejoin.joinMeeting'
+                            type='primary'>
                             {t('prejoin.joinMeeting')}
                         </ActionButton>
                     </Popover>
@@ -478,8 +510,8 @@ const Prejoin = ({
             </div>
             {showDialog && (
                 <JoinByPhoneDialog
-                    joinConferenceWithoutAudio = { joinConferenceWithoutAudio }
-                    onClose = { closeDialog } />
+                    joinConferenceWithoutAudio={joinConferenceWithoutAudio}
+                    onClose={closeDialog}/>
             )}
         </PreMeetingScreen>
     );
@@ -495,11 +527,12 @@ const Prejoin = ({
 function mapStateToProps(state: IReduxState) {
     const name = getDisplayName(state);
     const showErrorOnJoin = isDisplayNameRequired(state) && !name;
-    const { id: participantId } = getLocalParticipant(state) ?? {};
-    const { joiningInProgress } = state['features/prejoin'];
-    const { room } = state['features/base/conference'];
-    const { unsafeRoomConsent } = state['features/base/premeeting'];
-    const { showPrejoinWarning: showRecordingWarning } = state['features/base/config'].recordings ?? {};
+    const {id: participantId} = getLocalParticipant(state) ?? {};
+    const {joiningInProgress} = state['features/prejoin'];
+    const {room} = state['features/base/conference'];
+    const {unsafeRoomConsent} = state['features/base/premeeting'];
+    const {showPrejoinWarning: showRecordingWarning} = state['features/base/config'].recordings ?? {};
+    const { locationURL } = state['features/base/connection'];
 
     return {
         deviceStatusVisible: isDeviceStatusVisible(state),
@@ -516,7 +549,9 @@ function mapStateToProps(state: IReduxState) {
         showRecordingWarning: Boolean(showRecordingWarning),
         showUnsafeRoomWarning: isInsecureRoomName(room) && isUnsafeRoomWarningEnabled(state),
         unsafeRoomConsent,
-        videoTrack: getLocalJitsiVideoTrack(state)
+        videoTrack: getLocalJitsiVideoTrack(state),
+        _roomName: isRoomNameEnabled(state) ? getConferenceName(state) : '',
+        locationURL: locationURL ? locationURL : {},
     };
 }
 
